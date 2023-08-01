@@ -21,9 +21,13 @@ const DUMMY_EVENTS = [
     id: 'e3',
     title: 'Network for extroverts',
     description: 'You propably need no help with networking in general.',
-    localtion: 'My Street 12, 10115 Broke City',
-    date: '2023-09-28',
-    image: 'images/extrovert',
-    isFeatured: false
+    location: 'My Street 12, 10115 Broke City',
+    date: '2023-08-28',
+    image: 'images/extrovert.jpeg',
+    isFeatured: true
   }
 ]
+
+export function getFeaturedEvents() {
+  return DUMMY_EVENTS.filter(event => event.isFeatured);
+}
