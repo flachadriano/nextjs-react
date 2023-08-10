@@ -1,4 +1,5 @@
 import EventItem, { EventItemProps } from "./event-item"
+import styles from './event-list.module.css'
 
 interface EventListProps {
   items: EventItemProps[]
@@ -6,7 +7,7 @@ interface EventListProps {
 
 export default function EventList({ items }: EventListProps) {
   return (
-    <ul>
+    <ul className={styles.list}>
       {items.map(event => <EventItem key={event.id} {...event} />)}
     </ul>
   )

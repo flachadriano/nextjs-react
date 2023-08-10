@@ -1,4 +1,8 @@
-import Link from "next/link";
+import Button from "./ui/button/button"
+import DateIcon from "../icons/date-icon"
+import AddressIcon from "../icons/address-icon"
+import ArrowRightIcon from "../icons/arrow-right-icon"
+import styles from "./event-item.module.css"
 
 export interface EventItemProps {
   id: string
@@ -17,19 +21,30 @@ export default function EventItem({ id, title, description, location, date, imag
   const formattedAddress = (address: string) => address.replace(', ', '\n')
 
   return (
-    <li>
+    <li className={styles.item}>
       <img src={'/' + image} alt={title} />
-      <div>
-        <h2>{title}</h2>
-        <div>
-          <time>{formattedDate(date)}</time>
+      <div className={styles.content}>
+        <div className={styles.summary}>
+          <h2>{title}</h2>
+          <div className={styles.date}>
+            <DateIcon />
+            <time>{formattedDate(date)}</time>
+          </div>
+          <div className={styles.address}>
+            <AddressIcon />
+            <address>{formattedAddress(location)}</address>
+          </div>
         </div>
-        <div>
-          <address>{formattedAddress(location)}</address>
+        <div className={styles.actions}>
+          <Button link={`/events/${id}`}>
+            <>
+              <span>Explore Event</span>
+              <span className={styles.icons}>
+                <ArrowRightIcon />
+              </span>
+            </>
+          </Button>
         </div>
-      </div>
-      <div>
-        <Link href={`/events/${id}`}>Explore Event</Link>
       </div>
     </li>
   )
