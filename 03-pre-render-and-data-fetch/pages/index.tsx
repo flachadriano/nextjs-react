@@ -1,6 +1,23 @@
 import Head from 'next/head'
 
-export default function Home() {
+export async function getStaticProps() {
+  return { props: {
+    products: [
+      { id: 'p1', title: 'Product 1' }
+    ]
+  } };
+}
+
+interface HomeProps {
+  products: {
+    id: string
+    title: string
+  }[]
+}
+
+export default function Home({ products } : HomeProps) {
+  console.log(products);
+  
   return (
     <>
       <Head>
@@ -12,9 +29,9 @@ export default function Home() {
       <main>
         <h1>Project</h1>
         <ul>
-          <li>Product 1</li>
-          <li>Product 2</li>
-          <li>Product 3</li>
+          {products.map(p => (
+            <li key={p.id}>{p.title}</li>
+          ))}
         </ul>
       </main>
     </>
