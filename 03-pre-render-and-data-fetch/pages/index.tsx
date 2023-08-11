@@ -1,11 +1,13 @@
+import path from 'path';
+import fs from 'fs/promises';
 import Head from 'next/head'
 
 export async function getStaticProps() {
-  return { props: {
-    products: [
-      { id: 'p1', title: 'Product 1' }
-    ]
-  } };
+  const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData.toString());
+
+  return { props: { products: data.products } };
 }
 
 interface HomeProps {
@@ -16,8 +18,6 @@ interface HomeProps {
 }
 
 export default function Home({ products } : HomeProps) {
-  console.log(products);
-  
   return (
     <>
       <Head>
