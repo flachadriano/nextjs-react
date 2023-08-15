@@ -1,13 +1,15 @@
 import path from 'path';
 import fs from 'fs/promises';
 
-export async function getStaticProps({ params }: any) {
-  const productId = params.pid;
-
+async function getData() {
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
   const jsonData = await fs.readFile(filePath);
-  const data = JSON.parse(jsonData.toString());
+  return JSON.parse(jsonData.toString());
+}
 
+export async function getStaticProps({ params }: any) {
+  const productId = params.pid;
+  const data = await getData();
   const product = data.products.find((product: {id: string}) => product.id == productId);
   return {
     props: {
@@ -17,11 +19,10 @@ export async function getStaticProps({ params }: any) {
 }
 
 export async function getStaticPaths() {
+  const data = await getData();
+  const paths = data.products.map((p: any) => ({ params: { pid: p.id } }));
   return {
-    paths: [
-      { params: { pid: 'p1' } },
-      { params: { pid: 'p3' } }
-    ],
+    paths: paths,
     fallback: true // it will generate a static page, when it is not in the paths options, e.g.: page of product 2
     // fallback: 'blocking' // it will make the user wait, with loading of the browser, until the page is generated
   }
