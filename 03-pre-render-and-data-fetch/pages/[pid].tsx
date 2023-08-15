@@ -11,6 +11,13 @@ export async function getStaticProps({ params }: any) {
   const productId = params.pid;
   const data = await getData();
   const product = data.products.find((product: {id: string}) => product.id == productId);
+
+  if (!product) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
       loadedProduct: product
@@ -23,7 +30,7 @@ export async function getStaticPaths() {
   const paths = data.products.map((p: any) => ({ params: { pid: p.id } }));
   return {
     paths: paths,
-    fallback: true // it will generate a static page, when it is not in the paths options, e.g.: page of product 2
+    fallback: true // set if it will call to generate a static page, when it is not in the paths options
     // fallback: 'blocking' // it will make the user wait, with loading of the browser, until the page is generated
   }
 }
