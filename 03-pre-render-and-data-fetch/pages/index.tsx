@@ -12,6 +12,8 @@ export async function getStaticProps() {
       products: data.products
     },
     revalidate: 30 // regenerate the static page content after x seconds
+    // notFound: true/false - when you want to move the user to not found page
+    // redirect: string path - when you want to redirect to a specific page
   };
 }
 
