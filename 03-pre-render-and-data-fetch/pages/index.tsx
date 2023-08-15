@@ -7,7 +7,12 @@ export async function getStaticProps() {
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData.toString());
 
-  return { props: { products: data.products } };
+  return {
+    props: {
+      products: data.products
+    },
+    revalidate: 30 // regenerate the static page content after x seconds
+  };
 }
 
 interface HomeProps {
