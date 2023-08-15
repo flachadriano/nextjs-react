@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs/promises';
 import Head from 'next/head'
+import Link from 'next/link';
 
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
@@ -36,8 +37,10 @@ export default function Home({ products } : HomeProps) {
       <main>
         <h1>Project</h1>
         <ul>
-          {products.map(p => (
-            <li key={p.id}>{p.title}</li>
+          {products.map(product => (
+            <li key={product.id}>
+              <Link href={`/${product.id}`}>{product.title}</Link>
+            </li>
           ))}
         </ul>
       </main>
