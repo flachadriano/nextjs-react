@@ -3,27 +3,25 @@ import EventList from "../../components/events/event-list"
 import EventsSearch from "@/components/events/events-search";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { getAllEvents } from "@/helpers/api-util";
 
-export default function Events() {
-  const router = useRouter();
-  const [events, setEvents] = useState<any[]>();
-
-  const { data, error } = useSWR(
-    'https://nextjs-course-353dc-default-rtdb.firebaseio.com/events.json', 
-    url => fetch(url).then(d => d.json())
-  );
-
-  useEffect(() => {
-    if (data) {
-      setEvents(Object.values(data));
+export async function getStaticProps() {
+  const events = await getAllEvents();
+  return {
+    props: {
+      events
     }
-  }, [data]);
-
-  if (error) {
-    return <p>Error loading data.</p>
   }
+}
 
-  if (!data || !events) {
+interface EventsProps {
+  events: any[]
+}
+
+export default function Events({ events }: EventsProps) {
+  const router = useRouter();
+
+  if (!events) {
     return <p>Loading...</p>
   }
 
