@@ -1,12 +1,13 @@
 import { useRef } from "react"
 
 export default function Home() {
-  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const feedbackRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = (event: any) => {
     event.preventDefault();
-    const name = nameRef.current?.value;
-    console.log('name', name);
+    const email = emailRef.current?.value;
+    const feedback = feedbackRef.current?.value;
   }
 
   return (
@@ -14,8 +15,12 @@ export default function Home() {
       <h1>The Home Page</h1>
       <form onSubmit={onSubmit}>
         <div>
-          <span>Name</span>
-          <input ref={nameRef} />
+          <span>E-mail</span>
+          <input ref={emailRef} />
+        </div>
+        <div>
+          <span>Feedback</span>
+          <input ref={feedbackRef} />
         </div>
         <button type="submit">Submitt</button>
       </form>
