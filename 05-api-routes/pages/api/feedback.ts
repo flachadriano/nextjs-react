@@ -12,7 +12,7 @@ function getPath() {
   return path.join(process.cwd(), 'data', 'feedback.json');
 }
 
-function getData() {
+export function getData() {
   const fileData = readFileSync(getPath());
   const data = JSON.parse(fileData.toString());
   return data;
