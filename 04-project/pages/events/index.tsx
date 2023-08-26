@@ -1,16 +1,17 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { getAllEvents } from "@/helpers/api-util";
+
 import EventList from "../../components/events/event-list"
 import EventsSearch from "@/components/events/events-search";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { getAllEvents } from "@/helpers/api-util";
 
 export async function getStaticProps() {
   const events = await getAllEvents();
   return {
     props: {
       events
-    }
+    },
+    revalidate: 1800
   }
 }
 
